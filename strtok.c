@@ -11,13 +11,19 @@ char **split_line(char *input_line)
     tmp = strdup(input_line); /*Create a duplicate to avoid modifying the input*/
 
     token = strtok(tmp, DELIM);
+    if(!token)
+    {
+        free(input_line);
+        free(tmp);
+        return(NULL);
+    }
     while (token) {
         token_count++;
         token = strtok(NULL, DELIM);
     }
      free(tmp);
 
-   tokens = (char **)realloc(tokens, (token_count + 1) * sizeof(char *));
+   tokens = (char **)malloc((token_count + 1) * sizeof(char *));
     if (!tokens) {
       
         free(input_line);
@@ -28,23 +34,14 @@ char **split_line(char *input_line)
     
     while (token) {
         tokens[i] = strdup(token);
-        if (!tokens[i]) {
-           
-            free(input_line);
-            free(tokens);
-            return(NULL);
-        }
         i++;
         token = strtok(NULL,DELIM);
+    }
         free(input_line);
+        tokens[i]=NULL;
+        return tokens;
 
     }
-    free(token);
-
-    free(tmp),tmp=NULL; /* Free the temporary duplicate*/
-    tokens[i] = NULL; /*Null-terminate the array*/
-    free(tokens);
-    return tokens;
-}
+   
 
 
