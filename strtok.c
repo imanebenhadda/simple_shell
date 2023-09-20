@@ -1,4 +1,4 @@
-i#include"shell.h"
+#include"shell.h"
 char **split_line(char *input_line)
 {
     char *token = NULL, *tmp = NULL ,DELIM[]=" \t\n";
@@ -11,7 +11,7 @@ char **split_line(char *input_line)
     token = strtok(tmp, DELIM);
     if (!token)
 	{
-		free(inputinput_line);
+		free(input_line);
 		free(tmp);
 		return(NULL);
 	}
